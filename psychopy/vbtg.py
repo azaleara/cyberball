@@ -1,3 +1,4 @@
+
 # Virtual Ball Toss Game 
 # version of 'Cyberball' - https://www.ncbi.nlm.nih.gov/pubmed/16817529
 # for PsychoPy (using Python2.7) 
@@ -27,21 +28,23 @@ rndCnt=0
 condition="FBALL"
 
 instructions1 = '''
-En ésta tarea vas a practicar la visualización mental en un juego virtual de "lanzamiento de pelota" con otras dos personas quienes están registradas-activas en el sistema al mismo tiempo.
+In the upcoming task, we will test the effects of practicing mental visualization on task performance. Thus, we need you to practice your mental visualization skills. We have found that the best way to do this is to have you play an on-line ball tossing game with other participants who are logged on to the system at the same time.
+
+In a few moments, you will be playing a ball-tossing game with other students over our network. Several universities in the state of Michigan are taking part in a collaborative investigation of the effects of mental visualization on task performance, with high school students participating at several different Universities around the state of Michigan.
 '''
 
 instructions2 = '''
-El juego es muy simple. Cuando la pelota llegue a tí, presiona el botón "izquierdo" para lanzar la pelota a la jugadora de la izquierda o el botón "derecho" para lanzar la pelota a la jugadora de la derecha.
+The game is very simple. When the ball is tossed to you, simply press either the "2" key (pointer finger) to throw to the player on your left or the "3" key (middle finger) for to throw to the player on your right. When the game is over, the experimenter will give you additional instructions.
 
-Lo importante NO es tu lanzamiento de pelota, sino que VISUALICES MENTALMENTE toda la experiencia. Imagina cómo se ven las demás, qué tipo de personas son, dónde están jugando por ejemplo en un parque, en un gimnasio. Crea en tu mente una imagen mental completa de lo que podría estar pasando si estuvieras jugando presencial (en persona).
+What is important is not your ball tossing performance, but that you MENTALLY VISUALIZE the entire experience. Imagine what the others look like. What sort of people are they? Where are you playing? Is it warm and sunny or cold and rainy? Create in your mind a complete mental picture of what might be going on if you were playing this game in real life.
 '''
 
 
 # get subjID
 subjDlg = gui.Dlg(title="App Task")
-subjDlg.addField('ID participante:')
-subjDlg.addField('Nombre de la jugadora:')
-subjDlg.addField("Sala:")
+subjDlg.addField('Enter Subject ID:')
+subjDlg.addField('Player name:')
+subjDlg.addField("Room:")
 subjDlg.show()
 
 if gui.OK:
@@ -55,9 +58,9 @@ else:
     sys.exit()
  
  
-players=[["Marian", "Andrea"], 
-                ["Martha", "Laura"], 
-                ["Karla", "Sofia"]]
+players=[["Justin", "Will"], 
+                ["Nick", "Robin"], 
+                ["John", "Andrew"]]
 
 player1_name = players[room][0]
 player3_name = players[room][1]
@@ -76,14 +79,14 @@ for p in paths:
 # Set up window #
 ################
 
-useFullScreen = True
-win = visual.Window([800,600], monitor="testMonitor", units="deg", fullscr=useFullScreen, allowGUI=False, color="#D3D3D3")
+useFullScreen=False # True
+win = visual.Window([800,600], monitor="testMonitor", units="deg", fullscr=useFullScreen, allowGUI=False, color="#FFFFFF")
 
 ################
 # Set up stimuli #
 ################ 
 
-title=visual.TextStim(win,text="Bienvenida a la sala 'Lanzamiento de Pelota', una tarea interactiva de visualización mental!", height=0.8, pos=(0,6),color="#000000")
+title=visual.TextStim(win,text="Welcome to the Virtual Ball-Tossing Game, an Interactive Task Used for Mental Visualization!", height=0.8, pos=(0,6),color="#000000")
 instrText = visual.TextStim(win, text="",height=0.6, color="#000000", wrapWidth=16)
 instrKey = visual.TextStim(win, text="", height=0.6, color="#000000", pos=(0,-5))
 instr_p1 = visual.TextStim(win, text="",color="#000000", pos=(-6,3), height=0.6, alignHoriz="left")
@@ -98,7 +101,7 @@ round_fix = visual.TextStim(win, text="", height=1.5, color="#000000")
 
 fixation = visual.TextStim(win, text="+", height=2, color="#000000")
 
-goodbye = visual.TextStim(win, text="", color="#000000")
+goodbye = visual.TextStim(win,text="",color="#000000")
 
 p1name = visual.TextStim(win,text=player1_name,color="#000000", pos=(-6,2), height=0.5)
 p2name = visual.TextStim(win,text=player_name,color="#000000", pos=(0,-5), height=0.5)
@@ -113,17 +116,17 @@ def show_instructions():
     instrText.setAutoDraw(True)
     win.flip()
     #core.wait(20)
-    instrKey.setText("Presiona el botón del índice derecho para CONTINUAR")
+    instrKey.setText("PRESS 2 [pointer finger] to continue")
     instrKey.draw()
     win.flip()
-    event.waitKeys(keyList=['c'])
+    event.waitKeys(keyList=['2'])
     instrText.setText(instructions2)
     win.flip()
     #core.wait(20)
-    instrKey.setText("Presiona el botón del índice izquierdo para COMENZAR")
+    instrKey.setText("PRESS 3 [middle finger] to begin...")
     instrKey.draw()
     win.flip()
-    event.waitKeys(keyList=['b'])
+    event.waitKeys(keyList=['3'])
     instrText.setAutoDraw(False)
     
     p1_ticker="."
@@ -131,10 +134,10 @@ def show_instructions():
     p1_ticker_end=120
     p3_ticker_end=425
     
-    title.setText('Bienvenida a la sala de juego LP')
-    instr_p1.setText("JUGADORA 1: Esperando jugadora")
-    instr_p2.setText("JUGADORA 2: Bienvenida %s" % player_name)
-    instr_p3.setText("JUGADORA 3: Esperando jugadora")
+    title.setText('Joining VBT Game Room')
+    instr_p1.setText("PLAYER 1: Wating for player to join")
+    instr_p2.setText("PLAYER 2: Welcome %s" % player_name)
+    instr_p3.setText("PLAYER 3: Wating for player to join")
     instr_p1.setAutoDraw(True)
     instr_p2.setAutoDraw(True)
     instr_p3.setAutoDraw(True)
@@ -143,10 +146,10 @@ def show_instructions():
     win.flip()
     for tick in range(500):
         if tick == p1_ticker_end:
-            instr_p1.setText("Jugadora 1: Bienvenida %s" % player1_name)
+            instr_p1.setText("PLAYER 1: Welcome %s" % player1_name)
             p1_tick.setAutoDraw(False)
         elif tick == p3_ticker_end:
-            instr_p3.setText("Jugadora 3: Bienvenida %s" % player3_name)
+            instr_p3.setText("PLAYER 3: Welcome %s" % player3_name)
             p3_tick.setAutoDraw(False)
         else:
             if tick % 10 == 0:
@@ -239,7 +242,7 @@ def play_round():
     global rndCnt
     rndCnt=0
     logging.log(level=logging.DATA, msg="Displaying Round %i label" % round)
-    round_fix.setText("Ronda %i" % round)
+    round_fix.setText("Round %i" % round)
     round_fix.draw()
     win.flip()
     core.wait(2)
@@ -259,10 +262,10 @@ def play_round():
 # ================================
 
 show_instructions()
-ready_screen.setText("OK - Comenzamos!!!")
+ready_screen.setText("OK - here we go!!!")
 ready_screen.draw()
 win.flip()
-event.waitKeys(keyList=['s'])
+event.waitKeys(keyList=['space'])
 
 # setup logging #
 log_file = logging.LogFile("logs/%s.log" % (subj_id),  level=logging.DATA, filemode="w")
@@ -285,7 +288,7 @@ try:
     ser.write('255')
     ser.close()
 except:
-    print ("SCANNER NOT TRIGGERED")
+    print "SCANNER NOT TRIGGERED"
     pass
 # end of trigger code
 
@@ -303,7 +306,7 @@ holder=1
 round=2
 play_round()
 
-goodbye.setText("Juego Terminado!\nGracias por tu participación %s." % player_name)
+goodbye.setText("Game Over!\nThanks for playing %s." % player_name)
 goodbye.draw()
 win.flip()
 core.wait(7.5)     
