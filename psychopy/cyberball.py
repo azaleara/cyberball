@@ -1,4 +1,4 @@
-# Virtual Ball Toss Game 
+    # Virtual Ball Toss Game 
 # version of 'Cyberball' - https://www.ncbi.nlm.nih.gov/pubmed/16817529
 # for PsychoPy (using Python2.7) 
 
@@ -7,7 +7,7 @@
 # PsychoPy Python version by Matt O'Donnell (mbod@asc.upenn.edu)
 
 from psychopy import visual, core, logging, event,data, gui
-import sys
+import sys      
 import random
 import csv
 import serial
@@ -107,7 +107,46 @@ p2name = visual.TextStim(win,text=player_name,color="#000000", pos=(0,-5), heigh
 p3name = visual.TextStim(win,text=player3_name,color="#000000", pos=(6,2), height=0.5)
 ready_screen = visual.TextStim(win, text="Ready.....", height=1.2, color="#000000")
 
+def maximoEncabezado(nombreEncabezado,numDecisiones):
+    """
+    maximo encabezado funcion que nos permite hacer un numero maximo 
+    de encabezados.
+    @param nombre encabezado string
+    @param numDecision int
+    """
+    nombre=""
+    n=numDecisiones/2
+    if n%2==0:
+        n=int(numDecisiones/2)
+    else:
+        n=int((numDecisiones+1)/2)
 
+    lista=[]
+    for i in range(n):
+        nombre=nombreEncabezado + " " + str(i)
+        lista.append(nombre)
+        nombre=nombreEncabezado
+    return lista
+
+
+def encabezadoPrimeraVez(nombreP,tiempoR1,tiempoR2,maxTrials):
+    """
+    Funcion que nos permite hacer un header en caso de que nuestro csv este 
+    vacio
+    @param nombreP string
+    @param tiempoR1 string
+    @param tiempoR2 string
+    @param maxTrials int
+    """
+    header=[]
+    header.append(nombreP)
+    header.append(tiempoR1)
+    header.append(tiempoR2)
+    tr=maximoEncabezado("tiempo-R",maxTrials)
+    td=maximoEncabezado("decisio-t",maxTrials)
+    header+=tr
+    header+=td
+    return header
 
 def show_instructions():
     
@@ -290,6 +329,11 @@ def play_round():
 
 
 # ================================
+if os.stat("tiempo.csv").st_size==0:
+    header=encabezadoPrimeraVez("nombre", "tiempo-r1","tiempo-r2",maxTrials)
+    with open("tiempo.csv","w",encoding='UTF8') as f:
+        write=csv.writer(f)
+        write.writerow(header)
 
 show_instructions()
 
@@ -345,21 +389,18 @@ fin2=time.time()
 total2=fin1-inicio2
 
 data=[player_name,total1,total2]
-
 tiemposParciales=crearEncabezado("tiempo de desicion",tiempoReaccion)
 desicionesParciales=crearEncabezado("desicion tomado",decisionesReaccion)
-header=["Nombre","tiempo-Total-r1","tiempo-total-r2"]
-header+=tiemposParciales
-header+=desicionesParciales
 data+=tiempoReaccion
 data+=decisionesReaccion
 
 
-with open("tiempo.csv","w",encoding='UTF8') as f:
+with open("tiempo.csv","a") as f:
+  
+    
     write=csv.writer(f)
-    write.writerow(header)
     write.writerow(data)
-
+    
 goodbye.setText("Juego Terminado!\nGracias por tu participación %s." % player_name)
 goodbye.draw()
 win.flip()
