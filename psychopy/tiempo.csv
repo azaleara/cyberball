@@ -1,3 +1,2 @@
-nombre,tiempo-r1,tiempo-r2,tiempo-R 0,tiempo-R 1,tiempo-R 2,tiempo-R 3,tiempo-R 4,decisio-t 0,decisio-t 1,decisio-t 2,decisio-t 3,decisio-t 4
-diego,53.77475881576538,0.0,7.692728042602539,1.3349039554595947,3,3
-brenda,37.715983867645264,0.0,0.009973764419555664,0.010972738265991211,0.009969711303710938,2,3,3
+nombre,tiempo-r1,tiempo-r2,tiempo-R 0,decisio-t 0,tiempo-R 1,decisio-t 1,tiempo-R 2,decisio-t 2,tiempo-R 3,decisio-t 3,tiempo-R 4,decisio-t 4
+x,35.94659376144409,0.0,0.09075689315795898,3,0.010966300964355469,2,0.010975360870361328,3,0.009952068328857422,2

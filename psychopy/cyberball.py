@@ -128,6 +128,18 @@ def maximoEncabezado(nombreEncabezado,numDecisiones):
         nombre=nombreEncabezado
     return lista
 
+def juntarTiempoConDecision(listaTiempo,listaDecisiones):
+    """
+    Funcion que nos permite intecarlar 2 listas solamente 
+    si se garantiza que ambas listas tengana la misma longitud
+    @param listaTiempo list
+    @param listaDecisiones list
+    """
+    listaNueva=[]
+    for i in range(len(listaTiempo)):
+        listaNueva.append(listaTiempo[i])
+        listaNueva.append(listaDecisiones[i])
+    return listaNueva
 
 def encabezadoPrimeraVez(nombreP,tiempoR1,tiempoR2,maxTrials):
     """
@@ -144,8 +156,8 @@ def encabezadoPrimeraVez(nombreP,tiempoR1,tiempoR2,maxTrials):
     header.append(tiempoR2)
     tr=maximoEncabezado("tiempo-R",maxTrials)
     td=maximoEncabezado("decisio-t",maxTrials)
-    header+=tr
-    header+=td
+    listaAcomodada=juntarTiempoConDecision(tr,td)
+    header+=listaAcomodada
     return header
 
 def show_instructions():
@@ -154,14 +166,14 @@ def show_instructions():
     instrText.setText(instructions1)
     instrText.setAutoDraw(True)
     win.flip()
-    #core.wait(20)
+    core.wait(20)
     instrKey.setText("Presiona el botón del índice derecho para CONTINUAR")
     instrKey.draw()
     win.flip()
     event.waitKeys(keyList=['c'])
     instrText.setText(instructions2)
     win.flip()
-    #core.wait(20)
+    core.wait(20)
     instrKey.setText("Presiona el botón del índice izquierdo para COMENZAR")
     instrKey.draw()
     win.flip()
@@ -391,13 +403,10 @@ total2=fin1-inicio2
 data=[player_name,total1,total2]
 tiemposParciales=crearEncabezado("tiempo de desicion",tiempoReaccion)
 desicionesParciales=crearEncabezado("desicion tomado",decisionesReaccion)
-data+=tiempoReaccion
-data+=decisionesReaccion
-
+acomodaTD=juntarTiempoConDecision(tiempoReaccion,decisionesReaccion)
+data+=acomodaTD
 
 with open("tiempo.csv","a") as f:
-  
-    
     write=csv.writer(f)
     write.writerow(data)
     
