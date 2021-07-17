@@ -258,7 +258,7 @@ def throw_ball(fromP, toP):
         print(key)
         players.draw()
         win.flip()
-        core.wait(0.15)
+        core.wait(0.08)
     
     trialCnt+=1
     rndCnt+=1

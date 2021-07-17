@@ -1,42 +1,42 @@
-12.6347 	WARNING 	User requested fullscreen with size [800 600], but screen is actually [1366, 768]. Using actual size
-15.4932 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
-15.4943 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
-15.4952 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
-15.4960 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
-15.4977 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
-0.0020 	DATA 	START
-8.4040 	DATA 	Keypress: s
-8.4077 	DATA 	Displaying Round 1 label
-10.2778 	DATA 	Keypress: s
-10.4775 	DATA 	Starting Round 1
-14.1785 	DATA 	round 1 - trial 0 - throw: 1to2 - FBALL
-15.4655 	DATA 	PLAYER HAS BALL
-15.5555 	DATA 	Keypress: 3
-15.5568 	DATA 	PLAYER THROWS TO 3 - RT 0.0913
-15.5568 	DATA 	round 1 - trial 1 - throw: 2to3 - FBALL
-17.7806 	DATA 	round 1 - trial 2 - throw: 3to2 - FBALL
-18.9729 	DATA 	Keypress: 2
-19.0621 	DATA 	PLAYER HAS BALL
-19.0730 	DATA 	PLAYER THROWS TO 1 - RT 0.0102
-19.0730 	DATA 	round 1 - trial 3 - throw: 2to1 - FBALL
-20.9646 	DATA 	round 1 - trial 4 - throw: 1to3 - FBALL
-25.2367 	DATA 	round 1 - trial 5 - throw: 3to2 - FBALL
-26.4424 	DATA 	Keypress: 3
-26.5252 	DATA 	PLAYER HAS BALL
-26.5356 	DATA 	PLAYER THROWS TO 3 - RT 0.0104
-26.5357 	DATA 	round 1 - trial 6 - throw: 2to3 - FBALL
-29.1406 	DATA 	round 1 - trial 7 - throw: 3to2 - FBALL
-30.3249 	DATA 	Keypress: 2
-30.4247 	DATA 	PLAYER HAS BALL
-30.4349 	DATA 	PLAYER THROWS TO 1 - RT 0.0102
-30.4350 	DATA 	round 1 - trial 8 - throw: 2to1 - FBALL
-33.2883 	DATA 	round 1 - trial 9 - throw: 1to3 - FBALL
-38.0361 	DATA 	round 1 - trial 10 - throw: 3to2 - FBALL
-39.3395 	DATA 	PLAYER HAS BALL
-44.1547 	DATA 	Keypress: 3
-44.3541 	DATA 	Displaying Round 2 label
-46.3614 	DATA 	Starting Round 2
-52.9728 	DATA 	Keypress: s
-52.9739 	DATA 	Keypress: s
-60.6922 	DATA 	Keypress: s
-60.7235 	DATA 	END
+14.3336 	WARNING 	User requested fullscreen with size [800 600], but screen is actually [1366, 768]. Using actual size
+17.9796 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+17.9808 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+17.9820 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+17.9831 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+17.9856 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+0.0003 	DATA 	START
+7.8118 	DATA 	Keypress: s
+8.0111 	DATA 	Displaying Round 1 label
+9.8273 	DATA 	Keypress: s
+10.0270 	DATA 	Starting Round 1
+12.8317 	DATA 	round 1 - trial 0 - throw: 1to2 - FBALL
+13.5912 	DATA 	PLAYER HAS BALL
+16.1723 	DATA 	Keypress: 2
+16.1791 	DATA 	PLAYER THROWS TO 1 - RT 2.5879
+16.1792 	DATA 	round 1 - trial 1 - throw: 2to1 - FBALL
+20.2353 	DATA 	round 1 - trial 2 - throw: 1to3 - FBALL
+23.1874 	DATA 	round 1 - trial 3 - throw: 3to1 - FBALL
+25.1820 	DATA 	round 1 - trial 4 - throw: 1to3 - FBALL
+27.9302 	DATA 	round 1 - trial 5 - throw: 3to1 - FBALL
+28.0880 	DATA 	Keypress: x
+30.0062 	DATA 	round 1 - trial 6 - throw: 1to2 - FBALL
+30.7293 	DATA 	PLAYER HAS BALL
+36.1773 	DATA 	Keypress: 3
+36.1820 	DATA 	PLAYER THROWS TO 3 - RT 5.4526
+36.1820 	DATA 	round 1 - trial 7 - throw: 2to3 - FBALL
+39.7109 	DATA 	round 1 - trial 8 - throw: 3to2 - FBALL
+40.4424 	DATA 	PLAYER HAS BALL
+71.2944 	DATA 	Keypress: 5
+71.6229 	DATA 	Keypress: 4
+72.1503 	DATA 	Keypress: 2
+72.1550 	DATA 	PLAYER THROWS TO 1 - RT 31.7125
+72.1551 	DATA 	round 1 - trial 9 - throw: 2to1 - FBALL
+75.9566 	DATA 	round 1 - trial 10 - throw: 1to2 - FBALL
+76.6755 	DATA 	PLAYER HAS BALL
+81.6924 	DATA 	Displaying Round 2 label
+83.6999 	DATA 	Starting Round 2
+98.0174 	DATA 	Keypress: s
+98.0178 	DATA 	Keypress: s
+98.0180 	DATA 	Keypress: s
+98.0183 	DATA 	Keypress: s
+98.2171 	DATA 	END
