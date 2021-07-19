@@ -88,9 +88,9 @@ win = visual.Window([800,600], monitor="testMonitor", units="deg", fullscr=useFu
 title=visual.TextStim(win,text="Bienvenida a la sala 'Lanzamiento de Pelota', una tarea interactiva de visualización mental!", height=0.8, pos=(0,6),color="#000000")
 instrText = visual.TextStim(win, text="",height=0.6, color="#000000", wrapWidth=16)
 instrKey = visual.TextStim(win, text="", height=0.6, color="#000000", pos=(0,-5))
-instr_p1 = visual.TextStim(win, text="",color="#000000", pos=(-6,3), height=0.6, alignHoriz="left")
-instr_p2 = visual.TextStim(win, text="",color="#000000", pos=(-6, 0), height=0.6, alignHoriz="left")
-instr_p3 = visual.TextStim(win, text="",color="#000000", pos=(-6, -3), height=0.6, alignHoriz="left")
+instr_p1 = visual.TextStim(win, text="",color="#000000", pos=(-6,3), height=0.8, alignHoriz="left")
+instr_p2 = visual.TextStim(win, text="",color="#000000", pos=(-6, 0), height=0.8, alignHoriz="left")
+instr_p3 = visual.TextStim(win, text="",color="#000000", pos=(-6, -3), height=0.8, alignHoriz="left")
 p1_tick = visual.TextStim(win,text="", color="#000000", pos=(3.5,3.15), alignHoriz="left")
 p3_tick = visual.TextStim(win,text="", color="#000000", pos=(3.5,-2.85), alignHoriz="left")
 
