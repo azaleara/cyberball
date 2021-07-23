@@ -1,0 +1,39 @@
+10.9003 	WARNING 	User requested fullscreen with size [800 600], but screen is actually [1366, 768]. Using actual size
+13.3148 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+13.3155 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+13.3161 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+13.3167 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+13.3185 	WARNING 	TextStim.alignHoriz is deprecated. Use alignText and anchorHoriz attributes instead
+0.0002 	DATA 	START
+7.8044 	DATA 	Keypress: s
+8.0033 	DATA 	Displaying Round 1 label
+10.0125 	DATA 	Starting Round 1
+13.2321 	DATA 	round 1 - trial 0 - throw: 1to2 - FBALL
+14.1962 	DATA 	PLAYER HAS BALL
+31.1275 	DATA 	Keypress: 3
+31.1321 	DATA 	PLAYER THROWS TO 3 - RT 16.9358
+31.1321 	DATA 	round 1 - trial 1 - throw: 2to3 - FBALL
+33.5348 	DATA 	round 1 - trial 2 - throw: 3to2 - FBALL
+34.3867 	DATA 	PLAYER HAS BALL
+34.7116 	DATA 	Keypress: 2
+34.7180 	DATA 	PLAYER THROWS TO 1 - RT 0.3314
+34.7181 	DATA 	round 1 - trial 3 - throw: 2to1 - FBALL
+37.9651 	DATA 	round 1 - trial 4 - throw: 1to3 - FBALL
+40.1258 	DATA 	round 1 - trial 5 - throw: 3to2 - FBALL
+40.9386 	DATA 	PLAYER HAS BALL
+41.0868 	DATA 	Keypress: 3
+41.0893 	DATA 	PLAYER THROWS TO 3 - RT 0.1506
+41.0893 	DATA 	round 1 - trial 6 - throw: 2to3 - FBALL
+43.5404 	DATA 	round 1 - trial 7 - throw: 3to2 - FBALL
+44.3583 	DATA 	PLAYER HAS BALL
+44.5383 	DATA 	Keypress: 2
+44.5390 	DATA 	PLAYER THROWS TO 1 - RT 0.1807
+44.5390 	DATA 	round 1 - trial 8 - throw: 2to1 - FBALL
+47.4619 	DATA 	round 1 - trial 9 - throw: 1to3 - FBALL
+49.5598 	DATA 	round 1 - trial 10 - throw: 3to1 - FBALL
+56.7788 	DATA 	Displaying Round 2 label
+58.7845 	DATA 	Starting Round 2
+73.0552 	DATA 	Mouse: Left button down, pos=(724,265)
+73.0558 	DATA 	Mouse:  Left button up, pos=(724,265)
+73.0748 	DATA 	Keypress: s
+73.2474 	DATA 	END

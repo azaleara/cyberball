@@ -1,4 +1,4 @@
-# Virtual Ball Toss Game 
+    # Virtual Ball Toss Game 
 # version of 'Cyberball' - https://www.ncbi.nlm.nih.gov/pubmed/16817529
 # for PsychoPy (using Python2.7) 
 
@@ -7,20 +7,22 @@
 # PsychoPy Python version by Matt O'Donnell (mbod@asc.upenn.edu)
 
 from psychopy import visual, core, logging, event,data, gui
-import sys
+import sys      
 import random
 import csv
 import serial
 import os
 import time
-
+from timeit import timeit
 #################
 #  PARAMETERS #
 #################
 
 maxTime=178
-maxTrials=178
+maxTrials=10
 holder=1
+tiempoReaccion=[]
+decisionesReaccion=[]
 round=1
 trialCnt=0
 rndCnt=0
@@ -86,9 +88,9 @@ win = visual.Window([800,600], monitor="testMonitor", units="deg", fullscr=useFu
 title=visual.TextStim(win,text="Bienvenida a la sala 'Lanzamiento de Pelota', una tarea interactiva de visualización mental!", height=0.8, pos=(0,6),color="#000000")
 instrText = visual.TextStim(win, text="",height=0.6, color="#000000", wrapWidth=16)
 instrKey = visual.TextStim(win, text="", height=0.6, color="#000000", pos=(0,-5))
-instr_p1 = visual.TextStim(win, text="",color="#000000", pos=(-6,3), height=0.6, alignHoriz="left")
-instr_p2 = visual.TextStim(win, text="",color="#000000", pos=(-6, 0), height=0.6, alignHoriz="left")
-instr_p3 = visual.TextStim(win, text="",color="#000000", pos=(-6, -3), height=0.6, alignHoriz="left")
+instr_p1 = visual.TextStim(win, text="",color="#000000", pos=(-6,3), height=0.8, alignHoriz="left")
+instr_p2 = visual.TextStim(win, text="",color="#000000", pos=(-6, 0), height=0.8, alignHoriz="left")
+instr_p3 = visual.TextStim(win, text="",color="#000000", pos=(-6, -3), height=0.8, alignHoriz="left")
 p1_tick = visual.TextStim(win,text="", color="#000000", pos=(3.5,3.15), alignHoriz="left")
 p3_tick = visual.TextStim(win,text="", color="#000000", pos=(3.5,-2.85), alignHoriz="left")
 
@@ -105,21 +107,73 @@ p2name = visual.TextStim(win,text=player_name,color="#000000", pos=(0,-5), heigh
 p3name = visual.TextStim(win,text=player3_name,color="#000000", pos=(6,2), height=0.5)
 ready_screen = visual.TextStim(win, text="Ready.....", height=1.2, color="#000000")
 
+def maximoEncabezado(nombreEncabezado,numDecisiones):
+    """
+    maximo encabezado funcion que nos permite hacer un numero maximo 
+    de encabezados.
+    @param nombre encabezado string
+    @param numDecision int
+    """
+    nombre=""
+    n=numDecisiones/2
+    if n%2==0:
+        n=int(numDecisiones/2)
+    else:
+        n=int((numDecisiones+1)/2)
 
+    lista=[]
+    for i in range(n):
+        nombre=nombreEncabezado + " " + str(i)
+        lista.append(nombre)
+        nombre=nombreEncabezado
+    return lista
+
+def juntarTiempoConDecision(listaTiempo,listaDecisiones):
+    """
+    Funcion que nos permite intecarlar 2 listas solamente 
+    si se garantiza que ambas listas tengana la misma longitud
+    @param listaTiempo list
+    @param listaDecisiones list
+    """
+    listaNueva=[]
+    for i in range(len(listaTiempo)):
+        listaNueva.append(listaTiempo[i])
+        listaNueva.append(listaDecisiones[i])
+    return listaNueva
+
+def encabezadoPrimeraVez(nombreP,tiempoR1,tiempoR2,maxTrials):
+    """
+    Funcion que nos permite hacer un header en caso de que nuestro csv este 
+    vacio
+    @param nombreP string
+    @param tiempoR1 string
+    @param tiempoR2 string
+    @param maxTrials int
+    """
+    header=[]
+    header.append(nombreP)
+    header.append(tiempoR1)
+    header.append(tiempoR2)
+    tr=maximoEncabezado("tiempo-R",maxTrials)
+    td=maximoEncabezado("decisio-t",maxTrials)
+    listaAcomodada=juntarTiempoConDecision(tr,td)
+    header+=listaAcomodada
+    return header
 
 def show_instructions():
+    
     title.setAutoDraw(True)
     instrText.setText(instructions1)
     instrText.setAutoDraw(True)
     win.flip()
-    #core.wait(20)
+    core.wait(20)
     instrKey.setText("Presiona el botón del índice derecho para CONTINUAR")
     instrKey.draw()
     win.flip()
     event.waitKeys(keyList=['c'])
     instrText.setText(instructions2)
     win.flip()
-    #core.wait(20)
+    core.wait(20)
     instrKey.setText("Presiona el botón del índice izquierdo para COMENZAR")
     instrKey.draw()
     win.flip()
@@ -170,9 +224,28 @@ def show_instructions():
     instr_p3.setAutoDraw(False)
     
 def player_names(state=True):
+    
     p1name.setAutoDraw(state)
     p2name.setAutoDraw(state)
     p3name.setAutoDraw(state)
+
+def crearEncabezado(elNombreCabezado,listaLanzamientos):
+    """
+    Funcion auxiliar que nos devuelve una lista de 
+    nombres de encabezado.
+    @param elNombreEncabezado String 
+    @param listaLanzamiento lista  
+    Devuelve lista de encabezados
+    """
+    listaEncabezado=[]
+    nombreEncabezado=elNombreCabezado
+    
+    for i in range(len(listaLanzamientos)) :
+        nombreEncabezado= nombreEncabezado + " " + str(i)
+        print (i)
+        listaEncabezado.append(nombreEncabezado)
+        nombreEncabezado= elNombreCabezado
+    return listaEncabezado        
 
 def throw_ball(fromP, toP):
     global trialCnt, holder, rndCnt
@@ -182,15 +255,17 @@ def throw_ball(fromP, toP):
     
     for s in throw[key]:
         players.setImage('images/%s/%s' % (key,s))
+        print(key)
         players.draw()
         win.flip()
-        core.wait(0.15)
+        core.wait(0.08)
     
     trialCnt+=1
     rndCnt+=1
     holder=toP
     logging.flush()
     select_throw()
+    
 
 def select_throw():
     global condition
@@ -199,6 +274,7 @@ def select_throw():
         got_ball_time = trialClock.getTime()
         
         choice=[]
+        inicio = time.time()
         while len(choice)==0 or choice [0] not in ('2','3'):
             core.wait(0.01)
             if trialCnt > maxTrials or trialClock.getTime() > maxTime:
@@ -206,8 +282,16 @@ def select_throw():
             choice = event.getKeys(keyList=['2','3'])
         if choice[0]=='2':
             throwTo=1
+            fin=time.time()
+            decisionesReaccion.append("2")
+            tiempoReaccion.append(fin-inicio)    
+            
         elif choice[0]=='3':
             throwTo=3
+            fin=time.time()
+            decisionesReaccion.append("3")
+            tiempoReaccion.append(fin-inicio)
+             
             
         logging.log(level=logging.DATA,msg="PLAYER THROWS TO %i - RT %0.4f" % (throwTo, trialClock.getTime()-got_ball_time))
     else:
@@ -257,8 +341,14 @@ def play_round():
 
 
 # ================================
+if os.stat("tiempo.csv").st_size==0:
+    header=encabezadoPrimeraVez("nombre", "tiempo-r1","tiempo-r2",maxTrials)
+    with open("tiempo.csv","w",encoding='UTF8') as f:
+        write=csv.writer(f)
+        write.writerow(header)
 
 show_instructions()
+
 ready_screen.setText("OK - Comenzamos!!!")
 ready_screen.draw()
 win.flip()
@@ -298,11 +388,28 @@ win.flip()
 core.wait(8)
 
 round=1
+inicio1 = time.time()
 play_round()
+fin1=time.time()
+total1=fin1-inicio1    
 holder=1
-round=2
-play_round()
 
+round=2
+inicio2 = time.time()
+play_round()
+fin2=time.time()
+total2=fin1-inicio2
+
+data=[player_name,total1,total2]
+tiemposParciales=crearEncabezado("tiempo de desicion",tiempoReaccion)
+desicionesParciales=crearEncabezado("desicion tomado",decisionesReaccion)
+acomodaTD=juntarTiempoConDecision(tiempoReaccion,decisionesReaccion)
+data+=acomodaTD
+
+with open("tiempo.csv","a") as f:
+    write=csv.writer(f)
+    write.writerow(data)
+    
 goodbye.setText("Juego Terminado!\nGracias por tu participación %s." % player_name)
 goodbye.draw()
 win.flip()
