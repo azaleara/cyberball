@@ -1,4 +1,4 @@
-    # Virtual Ball Toss Game 
+# Virtual Ball Toss Game 
 # version of 'Cyberball' - https://www.ncbi.nlm.nih.gov/pubmed/16817529
 # for PsychoPy (using Python2.7) 
 
@@ -15,14 +15,35 @@ import os
 import time
 from timeit import timeit
 #################
+#  Special Function #
+#################
+def rellenaLista(maxTrials,tipoDummy):
+    """
+    Funcion que nos permite rellenar listas con un valor
+    predefinido
+    maxtrial -> int
+    dumy-any
+    """
+    lista=[]
+    for i in range(maxTrials+1):
+        lista.append(tipoDummy)
+    return lista
+
+#################
 #  PARAMETERS #
 #################
 
 maxTime=178
-maxTrials=10
+maxTrials=178
 holder=1
 tiempoReaccion=[]
+global tipoJugador
+global decisionesReaccion
+global lazTiros 
+lazTiros=0
+tipoJugador=[]
 decisionesReaccion=[]
+
 round=1
 trialCnt=0
 rndCnt=0
@@ -57,7 +78,7 @@ else:
     sys.exit()
  
  
-players=[["Marian", "Andrea"], 
+players=[["Mariana", "Andrea"], 
                 ["Martha", "Laura"], 
                 ["Karla", "Sofia"]]
 
@@ -107,6 +128,30 @@ p2name = visual.TextStim(win,text=player_name,color="#000000", pos=(0,-5), heigh
 p3name = visual.TextStim(win,text=player3_name,color="#000000", pos=(6,2), height=0.5)
 ready_screen = visual.TextStim(win, text="Ready.....", height=1.2, color="#000000")
 
+
+
+
+
+def crearEncabezado(elNombreCabezado,listaLanzamientos):
+    """
+    Funcion auxiliar que nos devuelve una lista de 
+    nombres de encabezado.
+    @param elNombreEncabezado String 
+    @param listaLanzamiento lista  
+    Devuelve lista de encabezados
+    """
+    listaEncabezado=[]
+    nombreEncabezado=elNombreCabezado
+    for i in range(len(listaLanzamientos) +1) :
+        nombreEncabezado= nombreEncabezado + " " + str(i)
+        print (i)
+        listaEncabezado.append(nombreEncabezado)
+        nombreEncabezado= elNombreCabezado
+    return listaEncabezado        
+
+
+
+
 def maximoEncabezado(nombreEncabezado,numDecisiones):
     """
     maximo encabezado funcion que nos permite hacer un numero maximo 
@@ -115,48 +160,45 @@ def maximoEncabezado(nombreEncabezado,numDecisiones):
     @param numDecision int
     """
     nombre=""
-    n=numDecisiones/2
-    if n%2==0:
-        n=int(numDecisiones/2)
-    else:
-        n=int((numDecisiones+1)/2)
-
     lista=[]
-    for i in range(n):
+    for i in range(numDecisiones):
         nombre=nombreEncabezado + " " + str(i)
         lista.append(nombre)
         nombre=nombreEncabezado
     return lista
 
-def juntarTiempoConDecision(listaTiempo,listaDecisiones):
+def juntarTiempoConDecision(listaTiempo,listaDecisiones,listaJugador):
     """
     Funcion que nos permite intecarlar 2 listas solamente 
     si se garantiza que ambas listas tengana la misma longitud
     @param listaTiempo list
     @param listaDecisiones list
+    @param listaDecisiones listaJugador
     """
     listaNueva=[]
     for i in range(len(listaTiempo)):
         listaNueva.append(listaTiempo[i])
         listaNueva.append(listaDecisiones[i])
+        listaNueva.append(listaJugador[i])
     return listaNueva
 
-def encabezadoPrimeraVez(nombreP,tiempoR1,tiempoR2,maxTrials):
+def encabezadoPrimeraVez(nombreP,tiempoR1,tiempoR2,tiempoTotal,maxTrials):
     """
-    Funcion que nos permite hacer un header en caso de que nuestro csv este 
-    vacio
-    @param nombreP string
-    @param tiempoR1 string
-    @param tiempoR2 string
+    @param nombreP String
+    @param tiempoR1 String
+    @param tiempoR2 String
+    @param tiempoTotal String
     @param maxTrials int
     """
     header=[]
     header.append(nombreP)
     header.append(tiempoR1)
     header.append(tiempoR2)
-    tr=maximoEncabezado("tiempo-R",maxTrials)
-    td=maximoEncabezado("decisio-t",maxTrials)
-    listaAcomodada=juntarTiempoConDecision(tr,td)
+    header.append(tiempoTotal)
+    tr=maximoEncabezado("tiempo-R",maxTrials+1)
+    td=maximoEncabezado("decision-t",maxTrials+1)
+    tp=maximoEncabezado("jugador en turno ",maxTrials+1)
+    listaAcomodada=juntarTiempoConDecision(tr,td,tp)
     header+=listaAcomodada
     return header
 
@@ -229,26 +271,10 @@ def player_names(state=True):
     p2name.setAutoDraw(state)
     p3name.setAutoDraw(state)
 
-def crearEncabezado(elNombreCabezado,listaLanzamientos):
-    """
-    Funcion auxiliar que nos devuelve una lista de 
-    nombres de encabezado.
-    @param elNombreEncabezado String 
-    @param listaLanzamiento lista  
-    Devuelve lista de encabezados
-    """
-    listaEncabezado=[]
-    nombreEncabezado=elNombreCabezado
-    
-    for i in range(len(listaLanzamientos)) :
-        nombreEncabezado= nombreEncabezado + " " + str(i)
-        print (i)
-        listaEncabezado.append(nombreEncabezado)
-        nombreEncabezado= elNombreCabezado
-    return listaEncabezado        
 
 def throw_ball(fromP, toP):
-    global trialCnt, holder, rndCnt
+    inicio=time.time()
+    global trialCnt, holder, rndCnt,lazTiros
     key = "%ito%i" % (fromP,toP)
     
     logging.log(level=logging.DATA, msg="round %i - trial %i - throw: %s - %s" % (round, trialCnt, key, condition))
@@ -259,22 +285,22 @@ def throw_ball(fromP, toP):
         players.draw()
         win.flip()
         core.wait(0.08)
-    
     trialCnt+=1
     rndCnt+=1
     holder=toP
     logging.flush()
     select_throw()
-    
+    fin=time.time()
+    tiempoTotal=fin-inicio
+    tiempoReaccion.append(tiempoTotal)
 
 def select_throw():
     global condition
+    global lazTiros,decisionesReaccion,tipoJugador,trialCnt
     if holder==2:
         logging.log(level=logging.DATA,msg="PLAYER HAS BALL")
         got_ball_time = trialClock.getTime()
-        
         choice=[]
-        inicio = time.time()
         while len(choice)==0 or choice [0] not in ('2','3'):
             core.wait(0.01)
             if trialCnt > maxTrials or trialClock.getTime() > maxTime:
@@ -282,15 +308,13 @@ def select_throw():
             choice = event.getKeys(keyList=['2','3'])
         if choice[0]=='2':
             throwTo=1
-            fin=time.time()
-            decisionesReaccion.append("2")
-            tiempoReaccion.append(fin-inicio)    
-            
+            tipoJugador[trialCnt]=1
+            decisionesReaccion[trialCnt]=2
         elif choice[0]=='3':
             throwTo=3
-            fin=time.time()
-            decisionesReaccion.append("3")
-            tiempoReaccion.append(fin-inicio)
+            tipoJugador[trialCnt]=1
+            decisionesReaccion[trialCnt]=3
+            
              
             
         logging.log(level=logging.DATA,msg="PLAYER THROWS TO %i - RT %0.4f" % (throwTo, trialClock.getTime()-got_ball_time))
@@ -333,7 +357,9 @@ def play_round():
     player_names(True)
     win.flip()
     core.wait(0.2)
+    
     select_throw()
+    
     player_names(False)
     fixation.draw()
     win.flip()
@@ -342,18 +368,22 @@ def play_round():
 
 # ================================
 if os.stat("tiempo.csv").st_size==0:
-    header=encabezadoPrimeraVez("nombre", "tiempo-r1","tiempo-r2",maxTrials)
+    print ("entre")
+    
+
+    header=encabezadoPrimeraVez("nombre", "tiempo-r1","tiempo-r2","TiempoTotal",maxTrials)
     with open("tiempo.csv","w",encoding='UTF8') as f:
         write=csv.writer(f)
         write.writerow(header)
 
-show_instructions()
 
+show_instructions()
 ready_screen.setText("OK - Comenzamos!!!")
 ready_screen.draw()
 win.flip()
 event.waitKeys(keyList=['s'])
-
+tipoJugador=rellenaLista(maxTrials,0)
+decisionesReaccion=rellenaLista(maxTrials,0)
 # setup logging #
 log_file = logging.LogFile("logs/%s.log" % (subj_id),  level=logging.DATA, filemode="w")
 
@@ -398,12 +428,16 @@ round=2
 inicio2 = time.time()
 play_round()
 fin2=time.time()
-total2=fin1-inicio2
+total2=fin2-inicio2
 
-data=[player_name,total1,total2]
+totalFinal=total1+total2
+data=[player_name,total1,total2,totalFinal]
+print(len(tiempoReaccion))
+print(len(decisionesReaccion))
+print(len(tipoJugador))
 tiemposParciales=crearEncabezado("tiempo de desicion",tiempoReaccion)
-desicionesParciales=crearEncabezado("desicion tomado",decisionesReaccion)
-acomodaTD=juntarTiempoConDecision(tiempoReaccion,decisionesReaccion)
+desicionesParciales=crearEncabezado("desicion tomada",decisionesReaccion)
+acomodaTD=juntarTiempoConDecision(tiempoReaccion,decisionesReaccion,tipoJugador)
 data+=acomodaTD
 
 with open("tiempo.csv","a") as f:
